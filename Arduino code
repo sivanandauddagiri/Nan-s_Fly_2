@@ -1,0 +1,207 @@
+#include <SoftwareSerial.h>
+
+
+
+SoftwareSerial BT(1, 0); //TX,RX PINS OF A BLUETOOTH CONNECTED TO THE ARDUINO UNO R3
+
+
+
+String readvoice;
+
+
+
+
+
+int RF = 2;// IN1 (this is connected from the motor driver L298 to arduino uno r3)
+
+int RB = 3;// IN2 (this is connected from the motor driver L298 to arduino uno r3)
+
+int LF = 4;// IN3 (this is connected from the motor driver L298 to arduino uno r3)
+
+int LB = 5;// IN4 (this is connected from the motor driver L298 to arduino uno r3)
+
+int LED = 6;// led is connected to this pin
+
+
+
+void setup() {
+
+
+
+BT.begin(9600);
+
+
+
+Serial.begin(9600);
+
+
+
+pinMode(RF, OUTPUT);
+
+pinMode(RB, OUTPUT);
+
+pinMode(LF, OUTPUT);
+
+pinMode(LB, OUTPUT);
+
+pinMode(LED,OUTPUT);
+
+
+
+}
+
+
+
+void loop() {
+
+
+
+while (BT.available()) {
+
+delay(10);
+
+char c = BT.read();
+
+readvoice += c;
+
+
+
+} if(readvoice.length()>0){
+
+Serial.println(readvoice);
+
+
+
+if(readvoice == "forward"){
+
+
+
+digitalWrite(RF, 1); // here the forward motor moves
+
+digitalWrite(LF, 1); // here the left forward motor moves
+
+digitalWrite(RB, 0);
+
+digitalWrite(LB, 0);
+
+delay(100);
+
+} else if(readvoice == "back"){
+
+
+
+digitalWrite(RF, 0);
+
+digitalWrite(LF, 0);
+
+digitalWrite(RB, 1); // right back motor moves back
+
+digitalWrite(LB, 1); // left back motor moves back
+
+delay(100);
+
+} else if(readvoice == "right"){
+
+
+
+digitalWrite(RF, 0);
+
+digitalWrite(LF, 1);
+
+digitalWrite(RB, 0);
+
+digitalWrite(LB, 0);
+
+delay(100);
+
+} else if(readvoice == "left"){
+
+
+
+digitalWrite(RF, 1); // right forward motor starts to move
+
+digitalWrite(LF, 0);
+
+digitalWrite(RB, 0);
+
+digitalWrite(LB, 0);
+
+delay(100);
+
+} else if(readvoice == "stop"){
+
+
+
+digitalWrite(RF, 0);
+
+digitalWrite(LF, 0);
+
+digitalWrite(RB, 0);
+
+digitalWrite(LB, 0);
+
+delay(100);
+
+} else if(readvoice == "off"){
+
+
+
+digitalWrite(RF, 0);
+
+digitalWrite(LF, 0);
+
+digitalWrite(RB, 0);
+
+digitalWrite(LB, 0);
+
+delay(100);
+
+} else if(readvoice == "hey siva ready"){
+
+digitalWrite(RF, 1);
+
+digitalWrite(LF, 1);
+
+digitalWrite(RB, 0);
+
+digitalWrite(LB, 0);
+
+delay(600);
+
+
+
+digitalWrite(RF, 0);
+
+digitalWrite(LF, 0);
+
+digitalWrite(RB, 1);
+
+digitalWrite(LB, 1);
+
+delay(600);
+
+
+
+digitalWrite(RF, 0);
+
+digitalWrite(LF, 0);
+
+digitalWrite(RB, 0);
+
+digitalWrite(LB, 0);
+
+delay(100);
+
+} else if(readvoice == "activate the dlrl"){
+
+digitalWrite(LED,1);
+
+delay(1000);
+
+} else if(readvoice == "deactivate the dlrl"){
+
+digitalWrite(LED,0);
+
+delay(1000);
+
+}readvoice = "";}}
