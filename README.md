@@ -1,4 +1,4 @@
 - 👋 Hi, I’m @sivanandauddagiri
 - Nick name Nanda/Nan
-- I am passionate about technologies..
-- Research needs exception...
+- Passionate about technologies..
+- Research needs exceptional ability...
